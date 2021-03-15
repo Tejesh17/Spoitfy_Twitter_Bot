@@ -51,7 +51,7 @@ while True:
                 present_artist = json_results ["item"]["artists"][0]["name"]
                 present_name = json_results ["item"]["name"]
                 TwtStatus = "Currently playing- " + present_name +" by "+ present_artist +"! \n"+ present_url
-                # api.update_status(TwtStatus )
+                api.update_status(TwtStatus )
                 print(TwtStatus)
             else:
                 print("same song playing!")
