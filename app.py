@@ -4,6 +4,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import cred
 import json
+from time import time, sleep
 
 # Authenticate to Twitter
 auth = tweepy.OAuthHandler(cred.Twitter_API_Key,  cred.Twitter_API_Secret)
@@ -30,14 +31,13 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=cred.Spotify_client_ID,
 present_name = ''
 present_artist = ''
 present_url = ''
-prev_name = ''
+prev_url = ''
 
 
 # Loop which runs every 30 seconds to check if new music is playing 
 
-from time import time, sleep
 while True:
-    sleep(60 - time() % 60)
+    sleep(30)
     try:
         results = sp.current_playback(market='ES', additional_types=None)
         str_results = json.dumps(results)
@@ -45,26 +45,17 @@ while True:
 
         if (json_results ["is_playing"])== True:
             # print("here")
-            prev_name = present_name
-            present_name = json_results ["item"]["name"]
-            if (prev_name != present_name):
-                present_artist = json_results ["item"]["album"]["artists"][0]["name"]
-                present_url = json_results ["item"]["external_urls"]["spotify"]
+            prev_url = present_url 
+            present_url = json_results ["item"]["external_urls"]["spotify"]
+            if (prev_url != present_url ):
+                present_artist = json_results ["item"]["artists"][0]["name"]
+                present_name = json_results ["item"]["name"]
                 TwtStatus = "Currently playing- " + present_name +" by "+ present_artist +"! \n"+ present_url
-                api.update_status(TwtStatus )
+                # api.update_status(TwtStatus )
                 print(TwtStatus)
-                # print(present_name)
-                # print(present_url)
-                # print(present_artist)
             else:
                 print("same song playing!")
         else:
             print ("not playing anything")
-            pass
     except:
         print ("offline")
-        pass
-
-
-
-
