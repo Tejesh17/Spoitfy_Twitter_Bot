@@ -4,7 +4,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import cred
 import json
-from time import time, sleep
+from time import  sleep
 
 # Authenticate to Twitter
 auth = tweepy.OAuthHandler(cred.Twitter_API_Key,  cred.Twitter_API_Secret)
@@ -19,7 +19,7 @@ except:
     print("Error during authentication")
 
 # Create Twitter API object
-api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+api = tweepy.API(auth)
 
 
 # Set Spotify scope and get authentication 
