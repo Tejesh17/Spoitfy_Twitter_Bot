@@ -5,6 +5,7 @@ import cred
 import json
 from time import  sleep
 from datetime import datetime
+from pytz import timezone
 logfile = open("logs.txt", "a") 
 
 # Authenticate to Twitter
@@ -39,8 +40,7 @@ prev_url = ''
 
 while True:
     sleep(30)
-    now = datetime.now()
-    current_time = now.strftime("%H:%M")
+    current_time = datetime.now(timezone("Asia/Kolkata")).strftime('%H:%M')
     try:
         results = sp.current_playback(market='ES', additional_types=None)
         str_results = json.dumps(results)
